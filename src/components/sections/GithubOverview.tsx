@@ -37,6 +37,8 @@ export const GithubOverview = () => {
   const [profile, setProfile] = useState<any>(null);
   const [languages, setLanguages] = useState<LanguageStat[]>([]);
   const [loading, setLoading] = useState(true);
+  // Tambahkan state mounted untuk menangani masalah hidrasi
+  const [mounted, setMounted] = useState(false);
 
   // Palet warna hijau autentik GitHub
   const githubTheme = {
@@ -45,6 +47,9 @@ export const GithubOverview = () => {
   };
 
   useEffect(() => {
+    // Set mounted menjadi true setelah komponen masuk ke DOM browser
+    setMounted(true);
+
     const fetchData = async () => {
       try {
         const profileRes = await fetch('https://api.github.com/users/riskyyiman');
@@ -151,7 +156,12 @@ export const GithubOverview = () => {
 
               <div className="w-full overflow-x-auto no-scrollbar py-2">
                 <div className="min-w-175 flex justify-center p-6 bg-background/50 rounded-3xl border border-border">
-                  <GitHubCalendar username="riskyyiman" blockSize={12} blockMargin={4} fontSize={13} theme={githubTheme} showWeekdayLabels />
+                  {/* Gunakan conditional rendering: hanya tampilkan GitHubCalendar jika mounted true */}
+                  {mounted ? (
+                    <GitHubCalendar username="riskyyiman" blockSize={12} blockMargin={4} fontSize={13} theme={githubTheme} showWeekdayLabels />
+                  ) : (
+                    <div className="h-37.5 flex items-center justify-center text-muted-foreground">Loading Calendar...</div>
+                  )}
                 </div>
               </div>
             </div>

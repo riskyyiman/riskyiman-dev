@@ -112,4 +112,12 @@ export const certificates: Certificate[] = [
     issued: 'Jul 01, 2024',
     URL: 'https://alwaysngoding.com/sertifikat/c2VydGlmaWthdC0yMTY2',
   },
+  {
+    id: 14,
+    image: '/SERT15.png',
+    title: 'Belajar Fundamental Deep Learning',
+    issuer: 'Dicoding',
+    issued: 'Jan 20, 2026',
+    URL: 'https://www.dicoding.com/certificates/0LZ05L7ONX65',
+  },
 ];

@@ -21,7 +21,7 @@ const duplicatedTechs = [...techs, ...techs];
 
 export const TechStack = () => {
   return (
-    <section className="py-24 bg-background overflow-hidden transition-colors duration-500">
+    <section className="py-16 bg-background overflow-hidden transition-colors duration-500">
       <div className="container mx-auto px-6 mb-16">
         <div className="flex flex-col items-center text-center gap-4">
           {/* Sub-label dengan accent cyan */}

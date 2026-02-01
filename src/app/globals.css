@@ -1,24 +1,29 @@
 @import 'tailwindcss';
 
-/* Konfigurasi Tema (Tailwind v4) */
+/* --- CONFIG THEME (Tailwind v4) --- */
 @theme {
+  /* Menghubungkan variabel font dari layout.tsx ke Tailwind */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-border: var(--border);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Animasi Kustom */
+  --animate-reveal: reveal-smooth 800ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* 1. DEFAULT: LIGHT MODE */
+/* --- 1. DEFAULT: LIGHT MODE --- */
 :root {
   --background: #ffffff;
   --foreground: #020617;
-  --card: #f8fafc; /* Diperhalus untuk kontras light mode */
+  --card: #f9fafb;
   --border: #e2e8f0;
 }
 
-/* 2. DARK MODE */
+/* --- 2. DARK MODE --- */
 .dark {
   --background: #020617;
   --foreground: #f8fafc;
@@ -26,21 +31,29 @@
   --border: #1e293b;
 }
 
-/* Style Dasar Body */
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  /* Transisi warna teks agar tidak kaget saat background berubah */
-  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+/* --- BASE STYLE --- */
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+  }
+
+  /* Membuat Heading selalu menggunakan font sans yang bold */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-sans;
+  }
 }
 
-/* --- VIEW TRANSITIONS API (Ultra-Smooth Wave) --- */
+/* --- VIEW TRANSITIONS API (Wave Effect) --- */
 ::view-transition-group(root) {
-  animation-duration: 800ms; /* Selaraskan dengan JS */
+  animation-duration: 800ms;
   animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -51,7 +64,6 @@ body {
   display: block;
 }
 
-/* Layer Management untuk Efek Ombak */
 .dark::view-transition-old(root) {
   z-index: 1;
 }
@@ -66,26 +78,26 @@ body {
   z-index: 1;
 }
 
-/* Tambahan Efek Visual saat Layer Baru Muncul */
 ::view-transition-new(root) {
-  animation: reveal-smooth 800ms cubic-bezier(0.65, 0, 0.35, 1);
+  animation: var(--animate-reveal);
 }
 
 @keyframes reveal-smooth {
   from {
     opacity: 0;
-    filter: blur(10px); /* Efek blur halus di awal "ombak" */
+    clip-path: circle(0% at 50% 50%);
+    filter: blur(10px);
   }
   to {
     opacity: 1;
+    clip-path: circle(100% at 50% 50%);
     filter: blur(0px);
   }
 }
 
-/* --- SCROLLBAR CUSTOMIZATION --- */
+/* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -94,16 +106,15 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--border);
-  border-radius: 9999px;
-  border: 2px solid var(--background);
-  transition: background-color 0.3s ease;
+  border-radius: 20px;
+  border: 1px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
+  @apply bg-slate-400;
 }
 
-/* --- UTILITY CLASSES --- */
+/* --- UTILITIES --- */
 @layer utilities {
   .bg-noise {
     position: relative;
@@ -116,7 +127,7 @@ body {
     inset: 0;
     z-index: -1;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity: 0.4;
+    opacity: 0.2; /* Dikecilkan sedikit agar lebih clean */
     pointer-events: none;
     mix-blend-mode: overlay;
   }
