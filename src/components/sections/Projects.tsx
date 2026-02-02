@@ -21,7 +21,6 @@ export const Projects: React.FC = () => {
 
   const filteredProjects = filter === 'all' ? projectsData : projectsData.filter((project) => project.isHighlighted);
 
-  // --- LOGIKA SORTING SERTIFIKAT ---
   const sortedCertificates = useMemo(() => {
     const data = [...certificates];
     return data.sort((a, b) => {
@@ -41,19 +40,12 @@ export const Projects: React.FC = () => {
   };
 
   return (
-    <section className="relative py-16 md:py-32 bg-background text-foreground transition-colors duration-500 overflow-hidden px-6">
-      {/* Background Decor */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-[10%] left-[-5%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px]" />
-      </div>
-
+    <section className="relative py-10 md:py-24 bg-background text-foreground transition-colors duration-500 overflow-hidden px-6">
       <div className="container mx-auto relative z-10 max-w-7xl">
-        {/* ================= PROJECT HEADER (TIDAK DIUBAH) ================= */}
         <div className="flex flex-col lg:grid-cols-12 lg:flex-row lg:items-end justify-between gap-8 mb-16 md:mb-24">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="h-[2px] w-8 bg-cyan-500 rounded-full" />
+              <div className="h-0.5 w-8 bg-cyan-500 rounded-full" />
               <span className="text-cyan-600 dark:text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-widest">Showcase</span>
             </div>
             <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none">
@@ -76,7 +68,6 @@ export const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* ================= PROJECT GRID (TIDAK DIUBAH) ================= */}
         <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
@@ -123,12 +114,11 @@ export const Projects: React.FC = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* ================= CERTIFICATES SECTION ================= */}
         <div className="pt-20 border-t border-border">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-8 bg-indigo-500 rounded-full" />
+                <div className="h-0.5 w-8 bg-indigo-500 rounded-full" />
                 <span className="text-indigo-600 dark:text-indigo-400 font-mono text-xs font-bold uppercase tracking-widest">Recognition</span>
               </div>
               <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-none">
@@ -137,7 +127,6 @@ export const Projects: React.FC = () => {
               </h2>
             </motion.div>
 
-            {/* SORTING & SWIPE INDICATOR */}
             <div className="flex flex-col items-start md:items-end gap-4">
               <div className="flex items-center gap-2 p-1.5 bg-card border border-border rounded-xl">
                 <button onClick={() => setSortBy('latest')} className={cn('p-2 rounded-lg transition-all', sortBy === 'latest' ? 'bg-indigo-500 text-white shadow-md' : 'text-slate-400 hover:text-foreground')} title="Terbaru">
@@ -157,10 +146,8 @@ export const Projects: React.FC = () => {
             </div>
           </div>
 
-          {/* Wrapper Grid & Scroll */}
           <div ref={certScrollRef} onScroll={handleScroll} className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 pb-6">
             {sortedCertificates.map((cert, index) => {
-              // HANYA sembunyikan di desktop jika belum "Show All" dan index > 5
               const isHiddenOnDesktop = !showAllCertificates && index >= 6;
 
               return (
@@ -170,13 +157,10 @@ export const Projects: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: (index % 3) * 0.1 }}
-                  className={cn(
-                    'min-w-[85vw] md:min-w-0 snap-center transition-all duration-500',
-                    isHiddenOnDesktop ? 'md:hidden' : 'md:block', // Di mobile tetap block (muncul semua)
-                  )}
+                  className={cn('min-w-[85vw] md:min-w-0 snap-center transition-all duration-500', isHiddenOnDesktop ? 'md:hidden' : 'md:block')}
                 >
                   <div className="group relative flex flex-col h-full bg-card border border-border rounded-[2.5rem] p-3 hover:border-indigo-500/30 transition-all duration-500">
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem] bg-background">
+                    <div className="relative aspect-16/10 w-full overflow-hidden rounded-4xl bg-background">
                       <Image src={cert.image} alt={cert.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur-md border border-white/20">
                         <ShieldCheck className="w-3 h-3 text-emerald-500" />
@@ -205,7 +189,6 @@ export const Projects: React.FC = () => {
             })}
           </div>
 
-          {/* Tombol Load More hanya tampil di Desktop */}
           {!showAllCertificates && certificates.length > 6 && (
             <div className="hidden md:flex justify-center mt-16">
               <button

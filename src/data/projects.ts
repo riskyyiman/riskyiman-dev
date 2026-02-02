@@ -59,4 +59,14 @@ export const projectsData: Project[] = [
     githubUrl: 'https://github.com/riskyyiman/SIAKAD-SDIT-CITAMULIA',
     isHighlighted: false,
   },
+  {
+    id: '6',
+    title: 'Kytech',
+    description: 'Situs showcase teknologi modern yang dirancang dengan pendekatan minimalis, mengutamakan performa tinggi dan pengalaman pengguna yang halus melalui arsitektur TypeScript yang solid.',
+    tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+    image: '/kytech.png',
+    liveUrl: 'https://kytech.vercel.app/',
+    githubUrl: 'https://github.com/riskyyiman/kytech',
+    isHighlighted: true,
+  },
 ];

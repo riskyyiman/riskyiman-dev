@@ -38,37 +38,26 @@ const floatAnimation: TargetAndTransition = {
 
 export const Hero: React.FC = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-32 pb-16 md:pt-32 md:pb-0 px-6 transition-colors duration-500">
-      {/* --- BACKGROUND DECOR --- */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[120px]" />
-      </div>
-
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-28 pb-16 md:pt-36 md:pb-0 px-6 transition-colors duration-500">
       <div className="container mx-auto z-10 relative max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* --- LEFT COLUMN: CONTENT (Teks & Tombol) --- */}
-          {/* order-1 agar muncul di atas pada Mobile */}
           <div className="lg:col-span-7 flex flex-col items-center md:items-start text-center md:text-left w-full order-1">
             {/* Tagline Label */}
             <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp} className="flex items-center gap-3 mb-8">
-              <div className="h-[2px] w-8 bg-cyan-500 rounded-full" />
+              <div className="h-0.5 w-8 bg-cyan-500 rounded-full" />
               <span className="text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">Creative Engineer</span>
             </motion.div>
 
-            {/* Headline */}
             <motion.h1 custom={0.1} initial="hidden" animate="visible" variants={fadeUp} className="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-foreground leading-[0.85] mb-10">
               Risky Iman <br />
               <span className="text-slate-400 dark:text-slate-700 italic font-light">Lael Prasetio.</span>
             </motion.h1>
 
-            {/* Description - Rata Kanan Kiri (text-justify) */}
-            <motion.p custom={0.2} initial="hidden" animate="visible" variants={fadeUp} className="text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl mb-12 font-medium text-justify">
-              Mendedikasikan diri pada presisi visual dan keunggulan teknis. Berfokus pada pengembangan antarmuka berperforma tinggi melalui ekosistem{' '}
-              <span className="text-foreground font-bold underline decoration-cyan-500/30 underline-offset-4">Next.js</span>.
+            <motion.p custom={0.2} initial="hidden" animate="visible" variants={fadeUp} className="text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-12 font-medium text-justify">
+              Bagi saya di <span className="text-foreground font-semibold">Informatika UMP</span>, teknologi terbaik bukan yang paling canggih, tapi yang paling solutif bagi manusia. Saya fokus membangun aplikasi di ekosistem{' '}
+              <span className="text-foreground font-bold underline decoration-cyan-500/30 underline-offset-8">Next.js</span> dengan performa kencang dan <span className="italic font-light">visual yang berkarakter</span>.
             </motion.p>
 
-            {/* CTA Buttons - Full width pada mobile (w-full sm:w-auto) */}
             <motion.div custom={0.3} initial="hidden" animate="visible" variants={fadeUp} className="flex flex-col sm:flex-row items-center gap-5 w-full md:w-auto mb-16">
               {/* Link ke halaman Projects */}
               <Link href="/projects" className="w-full sm:w-auto">
@@ -80,7 +69,6 @@ export const Hero: React.FC = () => {
                 </Magnetic>
               </Link>
 
-              {/* Link ke halaman Contact */}
               <Link href="/contact" className="w-full sm:w-auto">
                 <Magnetic>
                   <button className="w-full flex items-center justify-center gap-3 px-10 py-5 bg-card border border-border text-foreground rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm">
@@ -90,7 +78,6 @@ export const Hero: React.FC = () => {
               </Link>
             </motion.div>
 
-            {/* Social Links */}
             <motion.div custom={0.4} initial="hidden" animate="visible" variants={fadeUp} className="flex items-center gap-6">
               <div className="flex gap-3">
                 {socialLinks.map(({ href, icon: Icon, label }) => (
@@ -112,8 +99,6 @@ export const Hero: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* --- RIGHT COLUMN: CODE CARD --- */}
-          {/* order-2 agar muncul di bawah pada Mobile */}
           <div className="lg:col-span-5 relative flex justify-center items-center order-2 mt-8 lg:mt-0">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative w-full">
               <div className="absolute -top-10 -right-10 w-20 h-20 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
@@ -132,7 +117,6 @@ export const Hero: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Code Body */}
                 <div className="font-mono text-sm leading-relaxed space-y-4 text-left">
                   <div className="flex gap-2">
                     <span className="text-cyan-500 italic">type</span>

@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/Provider/ThemeProvider';
 import { FloatingDock } from '@/components/sections/FloatingDock';
+import { Footer } from '@/components/sections/Footer';
 
 const jakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <FloatingDock />
           <main className="min-h-screen">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

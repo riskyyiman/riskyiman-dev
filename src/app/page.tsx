@@ -1,6 +1,7 @@
 import { Hero } from '@/components/sections/Hero';
 import { TechStack } from '@/components/sections/TechStack';
 import { GithubOverview } from '@/components/sections/GithubOverview';
+import { Quotes } from '@/components/sections/Quotes';
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <TechStack />
       <GithubOverview />
+      <Quotes />
     </main>
   );
 }

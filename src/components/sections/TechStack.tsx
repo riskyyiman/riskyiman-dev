@@ -24,23 +24,19 @@ export const TechStack = () => {
     <section className="py-16 bg-background overflow-hidden transition-colors duration-500">
       <div className="container mx-auto px-6 mb-16">
         <div className="flex flex-col items-center text-center gap-4">
-          {/* Sub-label dengan accent cyan */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-3">
             <span className="h-px w-10 bg-cyan-500"></span>
             <span className="text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-[0.3em]">My Arsenal</span>
             <span className="h-px w-10 bg-cyan-500"></span>
           </motion.div>
 
-          {/* Title menggunakan warna semantik */}
           <h2 className="text-4xl md:text-5xl font-black text-foreground tracking-tight">
             Tech Stack <span className="text-slate-400 dark:text-slate-500/50 italic font-light">& Tools</span>
           </h2>
         </div>
       </div>
 
-      {/* Infinite Scroll Container */}
       <div className="relative flex overflow-hidden group">
-        {/* Gradient Masking: Menggunakan variabel --background agar otomatis pas */}
         <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-24 md:w-48 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 

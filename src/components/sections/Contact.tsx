@@ -1,18 +1,30 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Send, CheckCircle, MapPin, Clock, Loader2, X, User, MessageSquare } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { Mail, Send, CheckCircle, MapPin, Clock, Loader2, User, MessageSquare } from 'lucide-react';
 import { Magnetic } from '../ui/Magnetic';
 import emailjs from '@emailjs/browser';
 import { cn } from '@/lib/utils';
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay,
+      ease: [0.2, 0.65, 0.3, 0.9],
+    },
+  }),
+};
 
 export const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +34,6 @@ export const Contact: React.FC = () => {
     emailjs
       .sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, formRef.current, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!)
       .then(() => {
-        setShowPopup(true);
         setIsSubmitted(true);
         setFormData({ name: '', email: '', message: '' });
         setTimeout(() => setIsSubmitted(false), 5000);
@@ -36,116 +47,118 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="relative py-10 md:py-32 bg-background text-foreground transition-colors duration-500 overflow-hidden px-6">
-      {/* --- BACKGROUND DECOR --- */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[100px]" />
-      </div>
-
+    <section id="contact" className="relative py-10 md:py-24 bg-background text-foreground overflow-hidden px-6">
       <div className="container mx-auto relative z-10 max-w-7xl">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* --- LEFT SIDE --- */}
-          <div className="lg:col-span-6 space-y-10">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-8 bg-cyan-500 rounded-full" />
-                <span className="text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">Contact Me</span>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            <motion.div custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-0.5 w-10 bg-cyan-500 rounded-full" />
+                <span className="text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-[0.3em]">Connect</span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-6">
+
+              <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-10">
                 Let&apos;s build <br />
-                {/* PERBAIKAN: Slate-400 agar terlihat di mode terang, Slate-800/70 di mode gelap */}
-                <span className="text-slate-400 dark:text-slate-700 italic font-light">the future.</span>
+                <span className="text-slate-300 dark:text-slate-800 italic font-light">the future.</span>
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                Punya ide besar? <span className="text-foreground font-semibold underline decoration-cyan-500/30 underline-offset-4">Pintu digital saya selalu terbuka.</span>
+
+              <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed max-w-md font-medium mb-12">
+                Punya ide besar? <span className="text-foreground font-bold underline decoration-cyan-500/30 underline-offset-8">Pintu digital saya selalu terbuka</span> untuk kolaborasi inovatif.
               </p>
             </motion.div>
 
-            {/* Info Cards */}
-            <div className="grid gap-3">
+            <motion.div custom={0.2} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="grid gap-4 mt-auto">
               {[
-                { icon: Mail, label: 'Email', value: 'riskyiman699@gmail.com', color: 'bg-blue-500' },
-                { icon: MapPin, label: 'Location', value: 'Jawa Tengah, ID', color: 'bg-rose-500' },
-                { icon: Clock, label: 'Availability', value: 'Open for projects', color: 'bg-amber-500' },
+                { icon: Mail, label: 'Email', value: 'riskyiman699@gmail.com', color: 'bg-cyan-500' },
+                { icon: MapPin, label: 'Location', value: 'Jawa Tengah, ID', color: 'bg-indigo-500' },
+                { icon: Clock, label: 'Availability', value: 'Open for projects', color: 'bg-emerald-500' },
               ].map((info, idx) => (
-                <div key={idx} className="group p-4 rounded-2xl bg-card border border-border hover:border-cyan-500/50 transition-all flex items-center gap-4">
-                  <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm transition-transform group-hover:scale-110', info.color)}>
-                    <info.icon size={18} />
+                <div key={idx} className="group p-5 rounded-2xl bg-card/50 border border-border hover:border-cyan-500/40 transition-all flex items-center gap-5 shadow-sm">
+                  <div className={cn('w-12 h-12 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-500', info.color)}>
+                    <info.icon size={20} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">{info.label}</p>
-                    <p className="font-semibold truncate text-sm md:text-base">{info.value}</p>
+                    <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] mb-1">{info.label}</p>
+                    <p className="font-bold text-sm md:text-base text-foreground">{info.value}</p>
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          {/* --- RIGHT SIDE: FORM --- */}
-          <motion.div className="lg:col-span-5" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
-            <form ref={formRef} onSubmit={handleSubmit} className="relative p-8 md:p-10 rounded-[2.5rem] bg-card border border-border shadow-2xl shadow-slate-200/50 dark:shadow-none space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs uppercase font-bold text-slate-500 ml-1">Nama Lengkap</label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Masukkan nama"
-                      className="w-full bg-background border border-border focus:border-cyan-500 rounded-2xl pl-12 pr-4 py-4 outline-none transition-all text-sm"
-                    />
+          <motion.div className="lg:col-span-6" custom={0.1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <form ref={formRef} onSubmit={handleSubmit} className="relative h-full flex flex-col p-8 md:p-12 rounded-[2.5rem] bg-card border border-border shadow-2xl shadow-slate-200/50 dark:shadow-none">
+              <div className="space-y-8 grow">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] uppercase font-black text-slate-500 tracking-[0.2em] ml-1">Nama Lengkap</label>
+                    <div className="relative">
+                      <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-500" size={18} />
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="John Doe"
+                        className="w-full bg-background/50 border border-border focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 rounded-2xl pl-14 pr-6 py-5 outline-none transition-all text-sm font-medium"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] uppercase font-black text-slate-500 tracking-[0.2em] ml-1">Alamat Email</label>
+                    <div className="relative">
+                      <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="hello@example.com"
+                        className="w-full bg-background/50 border border-border focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 rounded-2xl pl-14 pr-6 py-5 outline-none transition-all text-sm font-medium"
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs uppercase font-bold text-slate-500 ml-1">Alamat Email</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                    <input
-                      type="email"
-                      name="email"
+
+                <div className="space-y-3 grow">
+                  <label className="text-[10px] uppercase font-black text-slate-500 tracking-[0.2em] ml-1">Pesan Anda</label>
+                  <div className="relative h-[calc(100%-2rem)]">
+                    <MessageSquare className="absolute left-5 top-6 text-slate-400" size={18} />
+                    <textarea
+                      name="message"
                       required
-                      value={formData.email}
+                      value={formData.message}
                       onChange={handleChange}
-                      placeholder="email@perusahaan.com"
-                      className="w-full bg-background border border-border focus:border-cyan-500 rounded-2xl pl-12 pr-4 py-4 outline-none transition-all text-sm"
+                      placeholder="Apa yang bisa kita kerjakan bersama?"
+                      className="w-full h-full min-h-50 bg-background/50 border border-border focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 rounded-4xl pl-14 pr-6 py-6 outline-none resize-none transition-all text-sm font-medium"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs uppercase font-bold text-slate-500 ml-1">Pesan Anda</label>
-                <div className="relative">
-                  <MessageSquare className="absolute left-4 top-5 text-slate-400" size={18} />
-                  <textarea
-                    name="message"
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tuliskan pesan Anda..."
-                    className="w-full min-h-[150px] bg-background border border-border focus:border-cyan-500 rounded-2xl pl-12 pr-4 py-4 outline-none resize-none transition-all text-sm"
-                  />
-                </div>
+              <div className="mt-10">
+                <Magnetic>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className={cn(
+                      'w-full py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all duration-500 active:scale-[0.98]',
+                      isSubmitted ? 'bg-emerald-500 text-white shadow-emerald-500/20' : 'bg-foreground text-background hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-cyan-500/10',
+                    )}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="animate-spin w-5 h-5" />
+                    ) : isSubmitted ? (
+                      <CheckCircle size={20} className="animate-in zoom-in duration-500" />
+                    ) : (
+                      <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    )}
+                    {isLoading ? 'Processing...' : isSubmitted ? 'Message Sent' : 'Send Message'}
+                  </button>
+                </Magnetic>
               </div>
-
-              <Magnetic>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={cn(
-                    'w-full py-5 rounded-2xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300',
-                    isSubmitted ? 'bg-emerald-500 text-white' : 'bg-foreground text-background hover:opacity-90 shadow-lg',
-                  )}
-                >
-                  {isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : isSubmitted ? <CheckCircle size={18} /> : <Send size={16} />}
-                  {isLoading ? 'Mengirim...' : isSubmitted ? 'Terkirim' : 'Kirim Pesan'}
-                </button>
-              </Magnetic>
             </form>
           </motion.div>
         </div>

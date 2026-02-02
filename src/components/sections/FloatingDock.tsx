@@ -65,7 +65,6 @@ export const FloatingDock = () => {
           <div className="flex md:hidden w-full items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-white font-black text-xs">R</div>
-              <span className="text-sm font-black tracking-tight text-foreground uppercase">Risky.tsx</span>
             </div>
 
             <div className="flex items-center gap-3">
