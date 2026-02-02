@@ -65,7 +65,7 @@ export const projectsData: Project[] = [
     description: 'Situs showcase teknologi modern yang dirancang dengan pendekatan minimalis, mengutamakan performa tinggi dan pengalaman pengguna yang halus melalui arsitektur TypeScript yang solid.',
     tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
     image: '/kytech.png',
-    liveUrl: 'https://kytech.vercel.app/',
+    liveUrl: 'https://kytech-self.vercel.app/',
     githubUrl: 'https://github.com/riskyyiman/kytech',
     isHighlighted: true,
   },
