@@ -17,6 +17,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Risky Iman | Frontend Developer',
   description: 'Crafting modern digital experiences with precision and soul.',
+  icons: {
+    icon: [
+      { url: '/favicon-96x96.png?v=1', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon.svg?v=1', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.ico?v=1',
+    apple: [{ url: '/apple-touch-icon.png?v=1', sizes: '180x180', type: 'image/png' }],
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
